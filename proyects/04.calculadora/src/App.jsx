@@ -1,34 +1,59 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useState } from 'react';
 import './App.css'
-
+import { Button } from "./components/Button";
+import { Window } from "./components/Window";
+import { evaluate } from "mathjs";
 function App() {
-  const [count, setCount] = useState(0)
+  const [input, setInput] = useState('')
+  const agregarInput = (valor) => {
+    setInput(input+valor)
+    console.log("hi")
+  }
 
+  const calcularResultado = () => {
+    if(input){
+      setInput(evaluate(input))
+    }
+    else{
+      alert("Ingrese valores")
+    }
+  }
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className='App'>
+      <div className='contenedor-calculadora'>
+        <Window input={input}/>
+        <div className='fila'>
+          <Button manejarClick={agregarInput}>1</Button>
+          <Button manejarClick={agregarInput}>2</Button>
+          <Button manejarClick={agregarInput}>3</Button>
+          <Button manejarClick={agregarInput}>+</Button>
+        </div>
+        <div className='fila'>
+          <Button manejarClick={agregarInput}>4</Button>
+          <Button manejarClick={agregarInput}>5</Button>
+          <Button manejarClick={agregarInput}>6</Button>
+          <Button manejarClick={agregarInput}>-</Button>
+        </div>
+        <div className='fila'>
+          <Button manejarClick={agregarInput}>7</Button>
+          <Button manejarClick={agregarInput}>8</Button>
+          <Button manejarClick={agregarInput}>9</Button>
+          <Button manejarClick={agregarInput}>*</Button>
+        </div>
+        <div className='fila'>
+          <Button manejarClick={calcularResultado}>=</Button>
+          <Button manejarClick={agregarInput}>0</Button>
+          <Button manejarClick={agregarInput}>.</Button>
+          <Button manejarClick={agregarInput}>/</Button>
+        </div>
+        <div className='fila'>
+          <Button manejarClick={() => {
+            setInput('')
+            console.log("clear")
+          }}>Clear</Button>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 
